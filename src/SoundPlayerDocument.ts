@@ -12,7 +12,7 @@ export class SoundPlayerDocument implements CustomDocument {
     private async loadAndParse(uri: Uri): Promise<AudioData | ErrorMessage> {
         const buffer = await LoadArrayBuffer(uri) // from Util. workspace.fs.readFile(uri)
         try {
-            const result = await DecodeAudio(buffer) // from Util. context.decodeAudioData(buffer, resolve, reject))
+            const result = await DecodeAudio(buffer) // from Util. AudioContext.decodeAudioData(buffer, resolve, reject))
             const auidoData: AudioData = {
                 type: 'audioData',
                 numberOfChannels: result.numberOfChannels,
