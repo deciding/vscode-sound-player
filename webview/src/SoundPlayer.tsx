@@ -31,11 +31,11 @@ export default class SoundPlayer extends PureComponent<Props, State>{
             audioData,
         } = this.props
         const audioContext = GetAudioContext()
-        const audioBuffer = GetAudioBuffer(audioData)
+        const audioBuffer = GetAudioBuffer(audioData) // from Util. AudioData to AudioBuffer
         this.audioNode = audioContext.createBufferSource()
-        this.audioNode.buffer = audioBuffer
+        this.audioNode.buffer = audioBuffer // give AudioBuffer to AudioContext
         this.audioNode.addEventListener('ended', this.onPlayEnded)
-        this.audioNode.connect(audioContext.destination)
+        this.audioNode.connect(audioContext.destination) // make sure we can hear the sound
         this.audioNode.start()
         this.setState({ isPlaying: true })
     }
