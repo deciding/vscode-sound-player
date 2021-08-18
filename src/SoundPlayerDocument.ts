@@ -3,16 +3,16 @@ import { DecodeAudio, LoadArrayBuffer, LogError } from './Util'
 
 export class SoundPlayerDocument implements CustomDocument {
 
-    readonly parseResult: Promise<AudioData | ErrorMessage>
+    readonly parseResult: Promise<AudioData | ErrorMessage> // AudioData if parse is successful
 
     constructor(readonly uri: Uri) {
-        this.parseResult = this.loadAndParse(uri)
+        this.parseResult = this.loadAndParse(uri) // load and parse the audio
     }
 
     private async loadAndParse(uri: Uri): Promise<AudioData | ErrorMessage> {
-        const buffer = await LoadArrayBuffer(uri)
+        const buffer = await LoadArrayBuffer(uri) // from Util. workspace.fs.readFile(uri)
         try {
-            const result = await DecodeAudio(buffer)
+            const result = await DecodeAudio(buffer) // from Util. context.decodeAudioData(buffer, resolve, reject))
             const auidoData: AudioData = {
                 type: 'audioData',
                 numberOfChannels: result.numberOfChannels,
@@ -21,7 +21,7 @@ export class SoundPlayerDocument implements CustomDocument {
                 channels: []
             }
             for (let i = 0; i < result.numberOfChannels; i++) {
-                auidoData.channels.push(...result.getChannelData(i))
+                auidoData.channels.push(...result.getChannelData(i)) // spread channel data
             }
             return auidoData
         } catch (e) {
